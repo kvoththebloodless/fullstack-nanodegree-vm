@@ -14,12 +14,21 @@ Base=declarative_base()
 ##CLASS SETUP CODE
 
 class Restaurant(Base):
-    __tablename__="Restaurant"
+    __tablename__="restaurant"
+    name=Column(String(80),nullable=False)
+    id=Column(Integer,primary_key=True)
 
-class Menu_Item(Base):
+class MenuItem(Base):
     __tablename__="menu_item"
+    name=Column(String(80),nullable=False)
+    id=Column(Integer,primary_key=True)
+    course=Column(String(250))
+    description=Column(String(250))
+    price=Column(String(8))
+    restaurant_id=Column(Integer, ForeignKey('restaurant.id'))
+    restaurant=relationship(Restaurant)
 
 #CONFIGURATION CODE
 engine=create_engine("sqlite:///restaurantmenu.db")
 
-Base.metadata.createall(engine)
+Base.metadata.create_all(engine)
